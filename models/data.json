@@ -1,0 +1,10 @@
+[
+  {
+    "ip": "10.1.20.101",
+    "serverName": "101",
+    "username": "admin",
+    "password": "@dmin+123",
+    "checked": true,
+    "apiResult": ""
+  }
+]

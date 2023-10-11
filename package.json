@@ -1,0 +1,39 @@
+{
+  "name": "rebootserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@rangermauve/fetch-event-source": "^1.0.3",
+    "@titelmedia/node-fetch": "^3.1.1",
+    "axios": "^0.19.2",
+    "body-parser": "^1.20.2",
+    "circular-json": "^0.5.9",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "eslint": "^8.54.0",
+    "event-source-polyfill": "^1.0.31",
+    "eventsource": "^2.0.2",
+    "express": "^4.18.2",
+    "express-line-notify": "^1.0.2",
+    "express-session": "^1.17.3",
+    "mongodb": "^6.0.0",
+    "mongoose": "^7.5.0",
+    "prettier": "^3.1.0",
+    "prettier-eslint": "^16.1.2",
+    "querystring": "^0.2.1",
+    "request": "^2.88.2",
+    "request-debug": "^0.2.0",
+    "socket.io": "^4.7.2",
+    "url": "^0.11.3",
+    "wmic": "^1.1.1",
+    "xhr2": "^0.2.1",
+    "xmlhttprequest": "^1.8.0"
+  }
+}
