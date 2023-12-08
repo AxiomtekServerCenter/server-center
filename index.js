@@ -7,6 +7,7 @@ const axios = require("axios");
 const cors = require("cors");
 const { verbose } = require("./Helper/Debug.cjs");
 const { createAxiosInstance, sendResponse } = require("./Helper/ApiHelper.cjs");
+const { setupOverviewApi } = require("./API/overview.cjs");
 const {
   handleFile,
   FILE_RESULT_SUCCESS,
@@ -35,6 +36,8 @@ const server = https.createServer(options, app).listen(port, () => {
   }
 });
 
+setupOverviewApi(app);
+
 app.get("/getservers", (req, res) => {
   const handleFileResult = handleFile(TYPE_SERVER_DATA);
   let responseMessage = "";
@@ -53,6 +56,7 @@ app.get("/getservers", (req, res) => {
   }
   sendResponse(res, error, responseMessage, data);
 });
+
 app.post("/login", async (req, res) => {
   const { username, password, ip } = req.body;
 
@@ -87,7 +91,6 @@ app.post("/login", async (req, res) => {
       res.end();
     });
 });
-
 
 app.post("/getserverstatus", async (req, res) => {
   let statusCode;

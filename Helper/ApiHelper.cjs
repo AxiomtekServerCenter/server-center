@@ -27,4 +27,21 @@ function sendResponse(res, error, responseMessage, data) {
   }
 }
 
-module.exports = { createAxiosInstance, sendResponse };
+function sendSuccessResponse(res, data) {
+  res.status(200);
+  res.json(data);
+  res.end();
+}
+
+function sendErrorResponse(res, error, status) {
+  res.status(status || 400);
+  res.json(error);
+  res.end();
+}
+
+module.exports = {
+  createAxiosInstance,
+  sendResponse,
+  sendSuccessResponse,
+  sendErrorResponse,
+};
