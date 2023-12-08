@@ -58,8 +58,40 @@ app.get("/getservers", (req, res) => {
   }
   sendResponse(res, error, responseMessage, data);
 });
+app.post("/login", async (req, res) => {
+  const { username, password, ip } = req.body;
 
+  const api = `login`;
+  const axiosInstance = axios.create({
+    withCredentials: true,
+    baseURL: "https://" + ip,
+    httpsAgent: new https.Agent({
+      rejectUnauthorized: false,
+    }),
+  });
 
+  let responseMsg = "";
+  let statusCode;
+
+  await axiosInstance
+    .post(api, { username, password })
+    .then((response) => {
+      statusCode = response.status;
+      responseMsg = JSON.stringify({ token: response.data.token });
+    })
+    .catch((error) => {
+      console.log(
+        `\n\n Login error. Status: ${error?.response?.status}. User: ${username}, IP: ${ip}. Message: ${error?.message}`,
+      );
+      statusCode = error?.response?.status || 400;
+      responseMsg = error?.message || "Unknown reason";
+    })
+    .finally(() => {
+      res.writeHead(statusCode, { "Content-type": "application/json" });
+      res.write(responseMsg);
+      res.end();
+    });
+});
 
 function sendResponse(res, error, responseMessage, data) {
   if (error) {
