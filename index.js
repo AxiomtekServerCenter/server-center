@@ -8,12 +8,8 @@ const cors = require("cors");
 const { verbose } = require("./Helper/Debug.cjs");
 const { createAxiosInstance, sendResponse } = require("./Helper/ApiHelper.cjs");
 const { setupOverviewApi } = require("./API/overview.cjs");
-const {
-  handleFile,
-  FILE_RESULT_SUCCESS,
-  FILE_RESULT_ERROR,
-  TYPE_SERVER_DATA,
-} = require("./Helper/FileHelper.cjs");
+const { setupPowerControlApi } = require("./API/powerControl.cjs");
+const { setupCrudApi } = require("./API/CRUD.cjs");
 const frontendUrl = "https://127.0.0.1:3006";
 const port = 6001;
 const options = {
@@ -37,29 +33,11 @@ const server = https.createServer(options, app).listen(port, () => {
 });
 
 setupOverviewApi(app);
-
-app.get("/getservers", (req, res) => {
-  const handleFileResult = handleFile(TYPE_SERVER_DATA);
-  let responseMessage = "";
-  let error;
-  let data;
-  if (handleFileResult.message !== FILE_RESULT_SUCCESS) {
-    responseMessage = handleFileResult.message;
-    error = "Cannot process file.";
-  } else {
-    try {
-      data = JSON.parse(handleFileResult.data);
-    } catch (e) {
-      responseMessage = "Failed to parse JSON file.";
-      error = e;
-    }
-  }
-  sendResponse(res, error, responseMessage, data);
-});
+setupPowerControlApi(app);
+setupCrudApi(app);
 
 app.post("/login", async (req, res) => {
   const { username, password, ip } = req.body;
-
   const api = `login`;
   const axiosInstance = axios.create({
     withCredentials: true,
