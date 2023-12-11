@@ -12,6 +12,10 @@ const { setupPowerControlApi } = require("./API/powerControl.cjs");
 const { setupCrudApi } = require("./API/CRUD.cjs");
 const { setupSseApi } = require("./API/SseApi.cjs");
 const { startSseServer } = require("./EventService/SSE/sseClient.cjs");
+const { setupPushEventApi } = require("./API/pushEventApi.cjs");
+const {
+  initPushStyleEvent,
+} = require("./EventService/PushEvent/PushEvent.cjs");
 
 const frontendUrl = "https://127.0.0.1:3006";
 const port = 6001;
@@ -42,6 +46,10 @@ setupCrudApi(app);
 // Event Service - SSE:
 setupSseApi(app);
 startSseServer();
+
+// Push Style Event:
+setupPushEventApi(app);
+initPushStyleEvent();
 
 app.post("/login", async (req, res) => {
   const { username, password, ip } = req.body;
