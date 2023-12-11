@@ -10,6 +10,9 @@ const { createAxiosInstance, sendResponse } = require("./Helper/ApiHelper.cjs");
 const { setupOverviewApi } = require("./API/overview.cjs");
 const { setupPowerControlApi } = require("./API/powerControl.cjs");
 const { setupCrudApi } = require("./API/CRUD.cjs");
+const { setupSseApi } = require("./API/SseApi.cjs");
+const { startSseServer } = require("./EventService/SSE/sseClient.cjs");
+
 const frontendUrl = "https://127.0.0.1:3006";
 const port = 6001;
 const options = {
@@ -35,6 +38,10 @@ const server = https.createServer(options, app).listen(port, () => {
 setupOverviewApi(app);
 setupPowerControlApi(app);
 setupCrudApi(app);
+
+// Event Service - SSE:
+setupSseApi(app);
+startSseServer();
 
 app.post("/login", async (req, res) => {
   const { username, password, ip } = req.body;
